@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.KalkulatorWieku" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="CustomDatePickerStyle" parent="android:Widget.Material.Light.DatePicker">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:calendarTextColor">@color/white</item>
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:colorControlActivated">@color/white</item>
+    </style>
 </resources>
