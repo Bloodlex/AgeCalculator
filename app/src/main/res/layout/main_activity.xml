@@ -3,29 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:editable="false"
-        android:focusable="false"
-        android:text="@string/app_name" />
+    android:padding="16dp"
+    android:fitsSystemWindows="true">
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wybierz datę" />
+        android:text="Wybierz datę urodzenia" />
 
     <DatePicker
         android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:spinnersShown="true"/>
+        android:spinnersShown="true" />
 
     <TextView
         android:id="@+id/selectedDateTextView"
@@ -40,5 +33,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Lat: 0, Miesięcy: 0, Dni: 0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data urodzenia osoby 15 lat przed:" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data urodzenia osoby 18 lat przed:" />
+    </LinearLayout>
 
 </LinearLayout>
