@@ -5,13 +5,11 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.activity.enableEdgeToEdge
 import java.time.LocalDate
 import java.time.Period
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var selectedDateTextView: TextView
     private lateinit var datePicker: DatePicker
     private lateinit var selectDateButton: Button
     private lateinit var ageTextView: TextView
@@ -20,20 +18,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        selectedDateTextView = findViewById(R.id.selectedDateTextView)
-        selectDateButton = findViewById(R.id.button)
+        selectDateButton = findViewById(R.id.chooseBirthdateButton)
         datePicker = findViewById(R.id.datePicker)
-        ageTextView = findViewById(R.id.ageTextView)
+        ageTextView = findViewById(R.id.timePassedTextView)
 
-        // Calculate the default date (15 years ago + 1 day)
-        val today = LocalDate.now()
-        val defaultDate = today.minusYears(15).minusDays(1)
-        val defaultYear = defaultDate.year
-        val defaultMonth = defaultDate.monthValue - 1 // Month is 0-indexed in DatePicker
-        val defaultDay = defaultDate.dayOfMonth
+        val defaultDate = calculateHardLimit()
 
-        // Set the initial date
-        datePicker.updateDate(defaultYear, defaultMonth, defaultDay)
+        if (defaultDate != null) {
+            datePicker.updateDate(defaultDate.year, defaultDate.monthValue - 1, defaultDate.dayOfMonth)
+        }
 
         // Hide the DatePicker initially
         datePicker.visibility = android.view.View.GONE
@@ -51,39 +44,50 @@ class MainActivity : ComponentActivity() {
 
         // Listen for date changes
         datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
-            val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-            selectedDateTextView.text = "Minęło: $selectedDate"
-
-            // Calculate and display the age
             calculateAndDisplayAge(selectedYear, selectedMonth, selectedDay)
         }
+
         // Calculate and display the age for the default date
-        calculateAndDisplayAge(defaultYear, defaultMonth, defaultDay)
+        if (defaultDate != null) {
+            calculateAndDisplayAge(defaultDate.year, defaultDate.monthValue - 1, defaultDate.dayOfMonth)
+        }
     }
 
     private fun calculateAndDisplayAge(year: Int, month: Int, day: Int) {
         val selectedDate = LocalDate.of(year, month + 1, day)
         val today = LocalDate.now()
-        // Calculate the default date (15 years ago + 1 day)
-        val defaultDate = today.minusYears(15).minusDays(1)
-        // Calculate the difference between the selected date and today
-        val period = Period.between(selectedDate, today)
-        // Calculate the difference between the default date and today
-        val periodDefault = Period.between(defaultDate, today)
 
-        val years = period.years
-        val months = period.months
-        val days = period.days
+        val defaultDate = calculateHardLimit()
+        val periodSelectedDateToToday = Period.between(selectedDate, today)
+        val periodDefaultDateToToday = Period.between(defaultDate, today)
+
+        val years = periodSelectedDateToToday.years
+        val months = periodSelectedDateToToday.months
+        val days = periodSelectedDateToToday.days
 
         if (selectedDate == defaultDate) {
-            val yearsDefault = periodDefault.years
-            val monthsDefault = periodDefault.months
-            val daysDefault = periodDefault.days
+            val yearsDefault = periodDefaultDateToToday.years
+            val monthsDefault = periodDefaultDateToToday.months
+            val daysDefault = periodDefaultDateToToday.days
             val ageText = "Lat: $yearsDefault, Miesięcy: $monthsDefault, Dni: $daysDefault"
             ageTextView.text = ageText
         } else {
             val ageText = "Lat: $years, Miesięcy: $months, Dni: $days"
             ageTextView.text = ageText
         }
+    }
+
+    private fun calculateHardLimit(): LocalDate? {
+        return calculateTimePassed(15)
+    }
+
+    private fun calculateSoftLimit(): LocalDate? {
+        return calculateTimePassed(18)
+    }
+
+    private fun calculateTimePassed(years: Long): LocalDate? {
+        val today = LocalDate.now()
+        val defaultDate = today.minusYears(years).minusDays(1)
+        return defaultDate
     }
 }
