@@ -7,12 +7,15 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import java.time.LocalDate
 import java.time.Period
+import java.time.format.DateTimeFormatter
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var datePicker: DatePicker
     private lateinit var selectDateButton: Button
     private lateinit var ageTextView: TextView
+    private lateinit var birthDateFor15YearsOldTextView: TextView
+    private lateinit var birthDateFor18YearsOldTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +24,17 @@ class MainActivity : ComponentActivity() {
         selectDateButton = findViewById(R.id.chooseBirthdateButton)
         datePicker = findViewById(R.id.datePicker)
         ageTextView = findViewById(R.id.timePassedTextView)
+        birthDateFor15YearsOldTextView = findViewById(R.id.birthDateFor15YearsOldTextView)
+        birthDateFor18YearsOldTextView = findViewById(R.id.birthDateFor18YearsOldTextView)
 
         val defaultDate = calculateHardLimit()
+        val ofPattern = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
+        val calculateSoftLimit = calculateSoftLimit()
+        if (defaultDate != null && calculateSoftLimit != null) {
+            birthDateFor15YearsOldTextView.text = defaultDate.format(ofPattern)
+            birthDateFor18YearsOldTextView.text = calculateSoftLimit.format(ofPattern);
+        }
 
         if (defaultDate != null) {
             datePicker.updateDate(
@@ -36,7 +48,6 @@ class MainActivity : ComponentActivity() {
         datePicker.visibility = android.view.View.GONE
 
         selectDateButton.setOnClickListener {
-            // Toggle the visibility of the DatePicker
             if (datePicker.visibility == android.view.View.GONE) {
                 datePicker.visibility = android.view.View.VISIBLE
                 selectDateButton.text = "Ukryj"
@@ -98,4 +109,9 @@ class MainActivity : ComponentActivity() {
         val defaultDate = today.minusYears(years).minusDays(1)
         return defaultDate
     }
+
+    /*    private fun LocalDate.formatDate(): String {
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault())
+            return format(formatter)
+        }*/
 }
