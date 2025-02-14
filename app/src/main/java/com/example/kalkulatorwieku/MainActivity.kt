@@ -25,7 +25,11 @@ class MainActivity : ComponentActivity() {
         val defaultDate = calculateHardLimit()
 
         if (defaultDate != null) {
-            datePicker.updateDate(defaultDate.year, defaultDate.monthValue - 1, defaultDate.dayOfMonth)
+            datePicker.updateDate(
+                defaultDate.year,
+                defaultDate.monthValue - 1,
+                defaultDate.dayOfMonth
+            )
         }
 
         // Hide the DatePicker initially
@@ -49,7 +53,11 @@ class MainActivity : ComponentActivity() {
 
         // Calculate and display the age for the default date
         if (defaultDate != null) {
-            calculateAndDisplayAge(defaultDate.year, defaultDate.monthValue - 1, defaultDate.dayOfMonth)
+            calculateAndDisplayAge(
+                defaultDate.year,
+                defaultDate.monthValue - 1,
+                defaultDate.dayOfMonth
+            )
         }
     }
 
