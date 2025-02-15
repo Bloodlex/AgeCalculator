@@ -11,6 +11,9 @@ import java.time.format.DateTimeFormatter
 
 private val DEFAULT_DATE_PATTERN = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
+private const val HARD_LIMIT_AGE: Long = 15L
+private const val SOFT_LIMIT_AGE: Long = 18L
+
 class MainActivity : ComponentActivity() {
 
     private lateinit var datePicker: DatePicker
@@ -86,11 +89,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun calculateHardLimit(): LocalDate? {
-        return calculateTimePassed(15)
+        return calculateTimePassed(HARD_LIMIT_AGE)
     }
 
     private fun calculateSoftLimit(): LocalDate? {
-        return calculateTimePassed(18)
+        return calculateTimePassed(SOFT_LIMIT_AGE)
     }
 
     private fun calculateTimePassed(years: Long): LocalDate? {
