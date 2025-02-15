@@ -3,23 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:fitsSystemWindows="true">
+    android:paddingTop="5dp">
 
     <Button
         android:id="@+id/chooseBirthdateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wybierz datę urodzenia" />
+        android:text="@string/wybierz_dat_urodzenia" />
 
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
-        android:minDate="01/01/1980"
         android:datePickerMode="spinner"
+        android:minDate="01/01/1980"
         android:spinnersShown="true" />
 
     <LinearLayout
@@ -32,14 +32,14 @@
             android:id="@+id/selectedDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Minęło: " />
+            android:text="@string/min_o" />
 
         <TextView
             android:id="@+id/timePassedTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Lat: 0, Miesięcy: 0, Dni: 0" />
+            android:text="@string/lat_0_miesi_cy_0_dni_0"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,23 +51,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="2dp">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
-                android:paddingRight="5dp"
                 android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
                 android:text="Data urodzenia osoby 18 lat przed:" />
 
             <TextView
                 android:id="@+id/birthDateFor18YearsOldTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textStyle="bold"
                 tools:text="@tools:sample/date/ddmmyy" />
         </LinearLayout>
 
@@ -81,31 +81,31 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingEnd="5dp"
                 android:text="Data urodzenia osoby 15 lat przed:" />
 
             <TextView
                 android:id="@+id/birthDateFor15YearsOldTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textStyle="bold"
                 tools:text="@tools:sample/date/ddmmyy" />
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/set15YearsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ustaw 15 lat" />
+        android:text="@string/ustaw_15_lat" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/set18YearsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ustaw 18 lat" />
+        android:text="@string/ustaw_18_lat" />
 
 </LinearLayout>
