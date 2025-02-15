@@ -9,6 +9,8 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 
+private val DEFAULT_DATE_PATTERN = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
 class MainActivity : ComponentActivity() {
 
     private lateinit var datePicker: DatePicker
@@ -20,80 +22,67 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        findElements()
 
-        selectDateButton = findViewById(R.id.chooseBirthdateButton)
-        datePicker = findViewById(R.id.datePicker)
-        ageTextView = findViewById(R.id.timePassedTextView)
-        birthDateFor15YearsOldTextView = findViewById(R.id.birthDateFor15YearsOldTextView)
-        birthDateFor18YearsOldTextView = findViewById(R.id.birthDateFor18YearsOldTextView)
-
-        val defaultDate = calculateHardLimit()
-        val ofPattern = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-
+        val hardLimitDefaultDate = calculateHardLimit()
         val calculateSoftLimit = calculateSoftLimit()
-        if (defaultDate != null && calculateSoftLimit != null) {
-            birthDateFor15YearsOldTextView.text = defaultDate.format(ofPattern)
-            birthDateFor18YearsOldTextView.text = calculateSoftLimit.format(ofPattern);
+
+        if (hardLimitDefaultDate != null && calculateSoftLimit != null) {
+            birthDateFor15YearsOldTextView.text = hardLimitDefaultDate.format(DEFAULT_DATE_PATTERN)
+            birthDateFor18YearsOldTextView.text = calculateSoftLimit.format(DEFAULT_DATE_PATTERN)
         }
 
-        if (defaultDate != null) {
+        if (hardLimitDefaultDate != null) {
             datePicker.updateDate(
-                defaultDate.year,
-                defaultDate.monthValue - 1,
-                defaultDate.dayOfMonth
+                hardLimitDefaultDate.year,
+                hardLimitDefaultDate.monthValue,
+                hardLimitDefaultDate.dayOfMonth
             )
         }
 
-        // Hide the DatePicker initially
         datePicker.visibility = android.view.View.GONE
 
         selectDateButton.setOnClickListener {
             if (datePicker.visibility == android.view.View.GONE) {
                 datePicker.visibility = android.view.View.VISIBLE
-                selectDateButton.text = "Ukryj"
+                selectDateButton.text = getString(R.string.ukryj)
             } else {
                 datePicker.visibility = android.view.View.GONE
-                selectDateButton.text = "Wybierz datę"
+                selectDateButton.text = getString(R.string.wybierz_dat)
             }
         }
 
-        // Listen for date changes
         datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
             calculateAndDisplayAge(selectedYear, selectedMonth, selectedDay)
         }
 
         // Calculate and display the age for the default date
-        if (defaultDate != null) {
+        if (hardLimitDefaultDate != null) {
             calculateAndDisplayAge(
-                defaultDate.year,
-                defaultDate.monthValue - 1,
-                defaultDate.dayOfMonth
+                hardLimitDefaultDate.year,
+                hardLimitDefaultDate.monthValue,
+                hardLimitDefaultDate.dayOfMonth
             )
         }
     }
 
     private fun calculateAndDisplayAge(year: Int, month: Int, day: Int) {
-        val selectedDate = LocalDate.of(year, month + 1, day)
+        val selectedDate = LocalDate.of(year, month, day)
         val today = LocalDate.now()
 
-        val defaultDate = calculateHardLimit()
+        val hardLimitDefaultDate = calculateHardLimit()
         val periodSelectedDateToToday = Period.between(selectedDate, today)
-        val periodDefaultDateToToday = Period.between(defaultDate, today)
+        val periodDefaultDateToToday = Period.between(hardLimitDefaultDate, today)
 
-        val years = periodSelectedDateToToday.years
-        val months = periodSelectedDateToToday.months
-        val days = periodSelectedDateToToday.days
-
-        if (selectedDate == defaultDate) {
-            val yearsDefault = periodDefaultDateToToday.years
-            val monthsDefault = periodDefaultDateToToday.months
-            val daysDefault = periodDefaultDateToToday.days
-            val ageText = "Lat: $yearsDefault, Miesięcy: $monthsDefault, Dni: $daysDefault"
-            ageTextView.text = ageText
+        val ageText: String = if (selectedDate == hardLimitDefaultDate) {
+            getString(R.string.duration_format,  periodDefaultDateToToday.years,
+                periodDefaultDateToToday.months,  periodDefaultDateToToday.days)
         } else {
-            val ageText = "Lat: $years, Miesięcy: $months, Dni: $days"
-            ageTextView.text = ageText
+            getString(R.string.duration_format, periodSelectedDateToToday.years,
+                periodSelectedDateToToday.months, periodSelectedDateToToday.days)
         }
+
+        ageTextView.text = ageText
     }
 
     private fun calculateHardLimit(): LocalDate? {
@@ -110,8 +99,11 @@ class MainActivity : ComponentActivity() {
         return defaultDate
     }
 
-    /*    private fun LocalDate.formatDate(): String {
-            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault())
-            return format(formatter)
-        }*/
+    private fun findElements() {
+        selectDateButton = findViewById(R.id.chooseBirthdateButton)
+        datePicker = findViewById(R.id.datePicker)
+        ageTextView = findViewById(R.id.timePassedTextView)
+        birthDateFor15YearsOldTextView = findViewById(R.id.birthDateFor15YearsOldTextView)
+        birthDateFor18YearsOldTextView = findViewById(R.id.birthDateFor18YearsOldTextView)
+    }
 }
