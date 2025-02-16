@@ -7,12 +7,6 @@
     android:orientation="vertical"
     android:paddingTop="5dp">
 
-    <Button
-        android:id="@+id/chooseBirthdateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wybierz_dat_urodzenia" />
-
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
@@ -32,13 +26,16 @@
             android:id="@+id/selectedDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/min_o" />
+            android:paddingEnd="4dp"
+            android:text="@string/min_o"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/timePassedTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lat_0_miesi_cy_0_dni_0"
+            android:text="@string/duration_format"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -46,12 +43,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:textAlignment="center"
             android:padding="2dp">
 
             <TextView
@@ -66,6 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:text="TextView"
                 android:textStyle="bold"
                 tools:text="@tools:sample/date/ddmmyy" />
@@ -89,23 +89,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:text="TextView"
                 android:textStyle="bold"
                 tools:text="@tools:sample/date/ddmmyy" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/set15YearsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ustaw_15_lat" />
-
-    <Button
-        android:id="@+id/set18YearsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ustaw_18_lat" />
 
 </LinearLayout>

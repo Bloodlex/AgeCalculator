@@ -1,9 +1,6 @@
 package com.example.kalkulatorwieku
 
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -19,7 +16,6 @@ private const val SOFT_LIMIT_AGE: Long = 18L
 class MainActivity : ComponentActivity() {
 
     private lateinit var datePicker: DatePicker
-    private lateinit var selectDateButton: Button
     private lateinit var ageTextView: TextView
     private lateinit var birthDateFor15YearsOldTextView: TextView
     private lateinit var birthDateFor18YearsOldTextView: TextView
@@ -45,9 +41,6 @@ class MainActivity : ComponentActivity() {
             )
         }
 
-        datePicker.visibility = GONE
-
-        setOnClickListener()
         setOnDateChangedListener()
         setDefaultDate(hardLimitDefaultDate)
     }
@@ -65,18 +58,6 @@ class MainActivity : ComponentActivity() {
     private fun setOnDateChangedListener() {
         datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
             calculateAndDisplayAge(selectedYear, selectedMonth, selectedDay)
-        }
-    }
-
-    private fun setOnClickListener() {
-        selectDateButton.setOnClickListener {
-            if (datePicker.visibility == GONE) {
-                datePicker.visibility = VISIBLE
-                selectDateButton.text = getString(R.string.ukryj)
-            } else {
-                datePicker.visibility = GONE
-                selectDateButton.text = getString(R.string.wybierz_dat)
-            }
         }
     }
 
@@ -118,7 +99,6 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun findElements() {
-        selectDateButton = findViewById(R.id.chooseBirthdateButton)
         datePicker = findViewById(R.id.datePicker)
         ageTextView = findViewById(R.id.timePassedTextView)
         birthDateFor15YearsOldTextView = findViewById(R.id.birthDateFor15YearsOldTextView)

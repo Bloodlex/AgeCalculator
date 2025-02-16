@@ -2,10 +2,9 @@
     <string name="app_name">Kalkulator wieku</string>
     <string name="ukryj">Ukryj</string>
     <string name="wybierz_dat">Wybierz datę</string>
-    <string name="duration_format">Lat: %1$d, Miesięcy: %2$d, Dni: %3$d</string>
+    <string name="duration_format">%1$d lat %2$d miesięcy %3$d dni</string>
     <string name="ustaw_15_lat">Ustaw 15 lat</string>
     <string name="ustaw_18_lat">Ustaw 18 lat</string>
     <string name="wybierz_dat_urodzenia">Wybierz datę urodzenia</string>
     <string name="min_o">Minęło:</string>
-    <string name="lat_0_miesi_cy_0_dni_0">Lat: 0, Miesięcy: 0, Dni: 0</string>
 </resources>
