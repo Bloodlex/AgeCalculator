@@ -1,6 +1,8 @@
 package com.example.kalkulatorwieku
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
@@ -43,29 +45,38 @@ class MainActivity : ComponentActivity() {
             )
         }
 
-        datePicker.visibility = android.view.View.GONE
+        datePicker.visibility = GONE
 
-        selectDateButton.setOnClickListener {
-            if (datePicker.visibility == android.view.View.GONE) {
-                datePicker.visibility = android.view.View.VISIBLE
-                selectDateButton.text = getString(R.string.ukryj)
-            } else {
-                datePicker.visibility = android.view.View.GONE
-                selectDateButton.text = getString(R.string.wybierz_dat)
-            }
-        }
+        setOnClickListener()
+        setOnDateChangedListener()
+        setDefaultDate(hardLimitDefaultDate)
+    }
 
-        datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
-            calculateAndDisplayAge(selectedYear, selectedMonth, selectedDay)
-        }
-
-        // Calculate and display the age for the default date
+    private fun setDefaultDate(hardLimitDefaultDate: LocalDate?) {
         if (hardLimitDefaultDate != null) {
             calculateAndDisplayAge(
                 hardLimitDefaultDate.year,
                 hardLimitDefaultDate.monthValue,
                 hardLimitDefaultDate.dayOfMonth
             )
+        }
+    }
+
+    private fun setOnDateChangedListener() {
+        datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
+            calculateAndDisplayAge(selectedYear, selectedMonth, selectedDay)
+        }
+    }
+
+    private fun setOnClickListener() {
+        selectDateButton.setOnClickListener {
+            if (datePicker.visibility == GONE) {
+                datePicker.visibility = VISIBLE
+                selectDateButton.text = getString(R.string.ukryj)
+            } else {
+                datePicker.visibility = GONE
+                selectDateButton.text = getString(R.string.wybierz_dat)
+            }
         }
     }
 
@@ -78,11 +89,15 @@ class MainActivity : ComponentActivity() {
         val periodDefaultDateToToday = Period.between(hardLimitDefaultDate, today)
 
         val ageText: String = if (selectedDate == hardLimitDefaultDate) {
-            getString(R.string.duration_format,  periodDefaultDateToToday.years,
-                periodDefaultDateToToday.months,  periodDefaultDateToToday.days)
+            getString(
+                R.string.duration_format, periodDefaultDateToToday.years,
+                periodDefaultDateToToday.months, periodDefaultDateToToday.days
+            )
         } else {
-            getString(R.string.duration_format, periodSelectedDateToToday.years,
-                periodSelectedDateToToday.months, periodSelectedDateToToday.days)
+            getString(
+                R.string.duration_format, periodSelectedDateToToday.years,
+                periodSelectedDateToToday.months, periodSelectedDateToToday.days
+            )
         }
 
         ageTextView.text = ageText
