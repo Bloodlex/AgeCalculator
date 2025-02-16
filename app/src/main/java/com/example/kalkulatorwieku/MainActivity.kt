@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import java.time.LocalDate
 import java.time.Period
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 private val DEFAULT_DATE_PATTERN = DateTimeFormatter.ofPattern("dd.MM.yyyy")
@@ -34,9 +35,11 @@ class MainActivity : ComponentActivity() {
         }
 
         if (hardLimitDefaultDate != null) {
+            datePicker.maxDate = LocalDate.now()
+                .atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
             datePicker.updateDate(
                 hardLimitDefaultDate.year,
-                hardLimitDefaultDate.monthValue,
+                hardLimitDefaultDate.monthValue + 1,
                 hardLimitDefaultDate.dayOfMonth
             )
         }
@@ -57,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
     private fun setOnDateChangedListener() {
         datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
-            calculateAndDisplayAge(selectedYear, selectedMonth, selectedDay)
+            calculateAndDisplayAge(selectedYear, selectedMonth + 1, selectedDay)
         }
     }
 
