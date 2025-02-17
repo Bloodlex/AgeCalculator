@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import com.example.kalkulatorwieku.other.TimeHelper.Companion.calculateTimePassed
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
@@ -99,12 +100,6 @@ class MainActivity : ComponentActivity() {
 
     private fun calculateSoftLimit(): LocalDate? {
         return calculateTimePassed(SOFT_LIMIT_AGE)
-    }
-
-    private fun calculateTimePassed(years: Long): LocalDate? {
-        val today = LocalDate.now()
-        val defaultDate = today.minusYears(years)
-        return defaultDate
     }
 
     private fun findElements() {
