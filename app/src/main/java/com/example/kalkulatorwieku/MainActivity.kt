@@ -34,23 +34,29 @@ class MainActivity : ComponentActivity() {
             birthDateFor18YearsOldTextView.text = calculateSoftLimit.format(DEFAULT_DATE_PATTERN)
         }
 
+        setDefaultForDatePicker(hardLimitDefaultDate)
+        setOnDateChangedListener()
+        setDatesForTextfields(hardLimitDefaultDate)
+    }
+
+    private fun setDefaultForDatePicker(hardLimitDefaultDate: LocalDate?) {
+        datePicker.maxDate = LocalDate.now()
+            .atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
         if (hardLimitDefaultDate != null) {
             datePicker.maxDate = LocalDate.now()
                 .atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
             datePicker.updateDate(
                 hardLimitDefaultDate.year,
-                hardLimitDefaultDate.monthValue + 1,
+                hardLimitDefaultDate.monthValue - 1,
                 hardLimitDefaultDate.dayOfMonth
             )
         }
-
-        setOnDateChangedListener()
-        setDefaultDate(hardLimitDefaultDate)
     }
 
-    private fun setDefaultDate(hardLimitDefaultDate: LocalDate?) {
+    private fun setDatesForTextfields(hardLimitDefaultDate: LocalDate?) {
         if (hardLimitDefaultDate != null) {
-            calculateAndDisplayAge(
+            calculateAndDisplayTimePassedTextField(
                 hardLimitDefaultDate.year,
                 hardLimitDefaultDate.monthValue,
                 hardLimitDefaultDate.dayOfMonth
@@ -60,11 +66,11 @@ class MainActivity : ComponentActivity() {
 
     private fun setOnDateChangedListener() {
         datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
-            calculateAndDisplayAge(selectedYear, selectedMonth + 1, selectedDay)
+            calculateAndDisplayTimePassedTextField(selectedYear, selectedMonth + 1, selectedDay)
         }
     }
 
-    private fun calculateAndDisplayAge(year: Int, month: Int, day: Int) {
+    private fun calculateAndDisplayTimePassedTextField(year: Int, month: Int, day: Int) {
         val selectedDate = LocalDate.of(year, month, day)
         val today = LocalDate.now()
 
@@ -97,7 +103,7 @@ class MainActivity : ComponentActivity() {
 
     private fun calculateTimePassed(years: Long): LocalDate? {
         val today = LocalDate.now()
-        val defaultDate = today.minusYears(years).minusDays(1)
+        val defaultDate = today.minusYears(years)
         return defaultDate
     }
 
