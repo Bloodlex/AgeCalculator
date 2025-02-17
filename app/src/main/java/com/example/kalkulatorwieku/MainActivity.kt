@@ -28,11 +28,10 @@ class MainActivity : ComponentActivity() {
         findElements()
 
         val hardLimitDefaultDate = calculateHardLimit()
-        val calculateSoftLimit = calculateSoftLimit()
+        val softLimitDate = calculateSoftLimit()
 
-        if (hardLimitDefaultDate != null && calculateSoftLimit != null) {
-            birthDateFor15YearsOldTextView.text = hardLimitDefaultDate.format(DEFAULT_DATE_PATTERN)
-            birthDateFor18YearsOldTextView.text = calculateSoftLimit.format(DEFAULT_DATE_PATTERN)
+        if (hardLimitDefaultDate != null && softLimitDate != null) {
+            fillPresetDates(hardLimitDefaultDate, softLimitDate)
         }
 
         setDefaultForDatePicker(hardLimitDefaultDate)
@@ -55,24 +54,28 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun fillPresetDates(
+        hardLimitDefaultDate: LocalDate,
+        softLimitDate: LocalDate
+    ) {
+        birthDateFor15YearsOldTextView.text = hardLimitDefaultDate.format(DEFAULT_DATE_PATTERN)
+        birthDateFor18YearsOldTextView.text = softLimitDate.format(DEFAULT_DATE_PATTERN)
+    }
+
     private fun setDatesForTextfields(hardLimitDefaultDate: LocalDate?) {
         if (hardLimitDefaultDate != null) {
-            calculateAndDisplayTimePassedTextField(
-                hardLimitDefaultDate.year,
-                hardLimitDefaultDate.monthValue,
-                hardLimitDefaultDate.dayOfMonth
-            )
+            calculateAndDisplayTimePassedTextField(hardLimitDefaultDate)
         }
     }
 
     private fun setOnDateChangedListener() {
         datePicker.setOnDateChangedListener { _, selectedYear, selectedMonth, selectedDay ->
-            calculateAndDisplayTimePassedTextField(selectedYear, selectedMonth + 1, selectedDay)
+            val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
+            calculateAndDisplayTimePassedTextField(selectedDate)
         }
     }
 
-    private fun calculateAndDisplayTimePassedTextField(year: Int, month: Int, day: Int) {
-        val selectedDate = LocalDate.of(year, month, day)
+    private fun calculateAndDisplayTimePassedTextField(selectedDate: LocalDate) {
         val today = LocalDate.now()
 
         val hardLimitDefaultDate = calculateHardLimit()

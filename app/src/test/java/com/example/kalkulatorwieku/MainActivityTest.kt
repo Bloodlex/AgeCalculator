@@ -6,6 +6,6 @@ class MainActivityTest {
 
     @Test
     fun calculateTimePassed() {
-        
+
     }
 }
