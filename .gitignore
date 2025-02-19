@@ -18,5 +18,4 @@
 local.properties
 /.kotlin/
 /.idea/
-/gradle/
-/gradle/*
+/gradle/wrapper/
