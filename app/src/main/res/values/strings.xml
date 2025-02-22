@@ -7,4 +7,8 @@
     <string name="ustaw_18_lat">Ustaw 18 lat</string>
     <string name="wybierz_dat_urodzenia">Wybierz datę urodzenia</string>
     <string name="min_o">Minęło:</string>
+    <string name="imi">Imię</string>
+    <string name="data_urodzenia_osoby_18_lat_przed">Data urodzenia osoby 18 lat przed:</string>
+    <string name="data_urodzenia_osoby_15_lat_przed">Data urodzenia osoby 15 lat przed:</string>
+    <string name="zapisz">Zapisz</string>
 </resources>
